@@ -19,7 +19,7 @@ class Experiment(db.Model):
     """
     Type of similarity. Either "orth" or "phon".
     """
-    similarityType = db.Column(db.String(20))
+  #  similarityType = db.Column(db.String(20))
 
     """
     An internal variable used to represent the current round
@@ -104,14 +104,15 @@ class Experiment(db.Model):
     """
     participantID = db.Column(db.String(100), default="")
 
-    def __init__(self, experimentID, userAgent, trialType, similarityType='phon', participantID=False, recruit_source=False):
+    #def __init__(self, experimentID, userAgent, trialType, similarityType='phon', participantID=False, recruit_source=False):
+    def __init__(self, experimentID, userAgent, trialType, participantID=False, recruit_source=False):
 
         self.currentRound = 0
         # self.trialType = trialType
         self.guid = experimentID
 
         self.trialType = trialType
-        self.similarityType = similarityType
+        #self.similarityType = similarityType
 
         self.startTime = str(time.time())
         self.userAgent = userAgent

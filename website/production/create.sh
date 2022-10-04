@@ -1,6 +1,6 @@
 set -e
 
-PYTHONANYWHERE_USERNAME="lwl501"
+PYTHONANYWHERE_USERNAME="lli90"
 
 # Variables
 GLOBAL_BAK=../frontend/src/global_old.bak

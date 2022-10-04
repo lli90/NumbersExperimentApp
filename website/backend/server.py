@@ -48,7 +48,7 @@ db = SQLAlchemy(app)
 
 from models import *
 
-WORDLIST_NAME = "trustwords.csv"
+WORDLIST_NAME = "numbers.csv"
 
 def requires_experiment_id(f):
     @wraps(f)
@@ -283,15 +283,15 @@ def new_experiment():
 
     query_params = get_referring_query_params(request)
 
-    similarity_type = query_params.get("SimType")
+    # similarity_type = query_params.get("SimType")
 
-    if similarity_type:
-        similarity_type = similarity_type[0]
+    # if similarity_type:
+    #     similarity_type = similarity_type[0]
 
-    app.logger.debug(f"initial similarity_type: {similarity_type}.")
+    # app.logger.debug(f"initial similarity_type: {similarity_type}.")
 
-    if similarity_type != 'phon' and similarity_type != 'orth':
-        similarity_type = 'phon'
+    # if similarity_type != 'phon' and similarity_type != 'orth':
+    #     similarity_type = 'phon'
 
     # If they're included the program will add
     participant_id = query_params.get("Participant_id")
@@ -303,9 +303,8 @@ def new_experiment():
         recruit_source = recruit_source[0]
 
     app.logger.debug(f"Participant ID: {participant_id}.")
-    app.logger.debug(f"similarity_type: {similarity_type}.")
+#    app.logger.debug(f"similarity_type: {similarity_type}.")
     app.logger.debug(f"Recruitment Source: {recruit_source}.")
-
 
 
     #if not session.get(trialType):
@@ -316,8 +315,10 @@ def new_experiment():
 
     session[trialType] = exp_id
 
-    exp = Experiment(exp_id, user_agent, trialType, similarity_type, participant_id, recruit_source)
-    utils.gen_word_set(WORDLIST, exp, similarity_type)
+    #exp = Experiment(exp_id, user_agent, trialType, similarity_type, participant_id, recruit_source)
+    exp = Experiment(exp_id, user_agent, trialType, participant_id, recruit_source)
+    #utils.gen_word_set(WORDLIST, exp, similarity_type)
+    utils.gen_word_set(WORDLIST, exp)
 
     return exp_id
 
