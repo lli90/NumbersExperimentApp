@@ -10,18 +10,24 @@ from config import BASE_FILE_LOCATION
 session = Session(profile_name="polly")
 polly = session.client("polly")
 
+BREAK_TIME = 0.5
+
 def get_audio_clip(number_blocks):
 
     number_blocks = [str(number).zfill(5) for number in number_blocks]
     filename = '_'.join(number_blocks)
 
-    verbal_number_blocks = [" ".join(block) + ' ' for block in number_blocks]
-    text_to_speak = " ".join(verbal_number_blocks)
+    text_blocks = [" ".join(block) + ' ' for block in number_blocks]
 
+    text_to_speak = f"<speak>{text_blocks[0]} <break time='{BREAK_TIME}s'/>\
+                             {text_blocks[1]} <break time='{BREAK_TIME}s'/>\
+                             {text_blocks[2]} <break time='{BREAK_TIME}s'/>\
+                             {text_blocks[3]} <break time='{BREAK_TIME}s'/>\
+                             {text_blocks[4]} <break time='{BREAK_TIME}s'/></speak>" 
     try:
         # Request speech synthesis
         # Need to find a way to make polly take a break between each block
-        response = polly.synthesize_speech(Text=text_to_speak, OutputFormat="mp3",
+        response = polly.synthesize_speech(Text=text_to_speak, TextType="ssml", OutputFormat="mp3",
                                             VoiceId="Emma")
     except (BotoCoreError, ClientError) as error:
         # The service returned an error, exit gracefully

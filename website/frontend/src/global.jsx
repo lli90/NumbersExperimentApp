@@ -1,4 +1,4 @@
-export var URL_BASE = "http://localhost:5000";
+export var URL_BASE = "https://lli90.pythonanywhere.com"
 
 export const REQUEST_SETTINGS = {
     credentials: "include",

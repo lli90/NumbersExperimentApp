@@ -116,7 +116,7 @@ def generate_audio_file(words):
     #         combined += a
 
     #     combined.export(filePath, format="mp3")
-        duration = len(combined)
+    # duration = len(combined)
 
     return filepath.split("/")[-1], duration
 
@@ -222,8 +222,7 @@ def get_audio():
     else:
         words = exp.get_current_wordlist()
 
-    filename = f'{'_'.join(words)}.mp3'
-    fileDuration = generate_audio_file(words)
+    filename, fileDuration = generate_audio_file(words)
 
     exp.record_audio_clip_length(fileDuration)
 
@@ -271,7 +270,7 @@ def get_words():
 
     if not exp.check_if_round_started():
         exp.record_round_start_time()
-
+        
     return "\n ".join(exp.get_current_wordlist())
 
 @app.route('/new_experiment')

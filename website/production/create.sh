@@ -12,7 +12,7 @@ cat ./_global.jsx > $GLOBAL_JSX
 
 cd ../frontend
 ./deploy.sh
-cd ../production_custom
+cd ../production
 
 # production
 rm -rf ./website website.zip
