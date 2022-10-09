@@ -19,7 +19,6 @@ def load_wordlist(path):
 
     return wordlist
 
-#def gen_word_set(wordlist, exp, similarity_type):
 def gen_word_set(wordlist, exp):
     """
     Method creates the entire experiment schema.

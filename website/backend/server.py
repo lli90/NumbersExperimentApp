@@ -226,7 +226,6 @@ def get_audio():
 
     exp.record_audio_clip_length(fileDuration)
 
-    #return send_from_directory(f'{BASE_FILE_LOCATION}audio/generated', fileName)
     return send_from_directory(f'{BASE_FILE_LOCATION}audio/', filename)
 
 @app.route('/get_visual')
@@ -270,7 +269,7 @@ def get_words():
 
     if not exp.check_if_round_started():
         exp.record_round_start_time()
-        
+
     return "\n ".join(exp.get_current_wordlist())
 
 @app.route('/new_experiment')
@@ -287,16 +286,6 @@ def new_experiment():
 
     query_params = get_referring_query_params(request)
 
-    # similarity_type = query_params.get("SimType")
-
-    # if similarity_type:
-    #     similarity_type = similarity_type[0]
-
-    # app.logger.debug(f"initial similarity_type: {similarity_type}.")
-
-    # if similarity_type != 'phon' and similarity_type != 'orth':
-    #     similarity_type = 'phon'
-
     # If they're included the program will add
     participant_id = query_params.get("Participant_id")
     if participant_id:
@@ -307,11 +296,9 @@ def new_experiment():
         recruit_source = recruit_source[0]
 
     app.logger.debug(f"Participant ID: {participant_id}.")
-#    app.logger.debug(f"similarity_type: {similarity_type}.")
+
     app.logger.debug(f"Recruitment Source: {recruit_source}.")
 
-
-    #if not session.get(trialType):
     user_agent = request.headers.get("User-Agent")
 
     exp_id = str(uuid.uuid4())
@@ -319,14 +306,10 @@ def new_experiment():
 
     session[trialType] = exp_id
 
-    #exp = Experiment(exp_id, user_agent, trialType, similarity_type, participant_id, recruit_source)
     exp = Experiment(exp_id, user_agent, trialType, participant_id, recruit_source)
-    #utils.gen_word_set(WORDLIST, exp, similarity_type)
     utils.gen_word_set(WORDLIST, exp)
 
     return exp_id
-
-   # return session.get(trialType)
 
 @app.route('/submit_result')
 @requires_experiment_id

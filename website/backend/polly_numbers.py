@@ -27,8 +27,8 @@ def get_audio_clip(number_blocks):
     try:
         # Request speech synthesis
         # Need to find a way to make polly take a break between each block
-        response = polly.synthesize_speech(Text=text_to_speak, TextType="ssml", OutputFormat="mp3",
-                                            VoiceId="Emma")
+        response = polly.synthesize_speech(Text=text_to_speak, TextType="ssml", 
+                                           OutputFormat="mp3", VoiceId="Emma")
     except (BotoCoreError, ClientError) as error:
         # The service returned an error, exit gracefully
         print(error)
@@ -58,5 +58,3 @@ def get_audio_clip(number_blocks):
         sys.exit(-1)
 
     return(output)
-
-#get_audio_clip([11226,25536,43511,59432,44815])
