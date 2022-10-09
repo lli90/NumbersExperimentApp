@@ -18,6 +18,7 @@ from config import BASE_FILE_LOCATION
 import attack
 import utils
 import logging
+import polly_numbers
 
 
 logging.basicConfig(
@@ -100,22 +101,24 @@ def generate_audio_file(words):
     app.logger.debug(f"Generating audio file for: {str(words)}")
 
     duration = 0
+    
+    filepath = polly_numbers.get_audio_clip(words)
 
-    filePath = f"{BASE_FILE_LOCATION}audio/generated/{'_'.join(words)}.mp3"
-    if not os.path.isfile(filePath):
+    #filePath = f"{BASE_FILE_LOCATION}audio/generated/{'_'.join(words)}.mp3"
+    # if not os.path.isfile(filePath):
 
-        combined = AudioSegment.from_mp3(
-            f"{BASE_FILE_LOCATION}audio/{words[0].upper()}.mp3")
+    #     combined = AudioSegment.from_mp3(
+    #         f"{BASE_FILE_LOCATION}audio/{words[0].upper()}.mp3")
 
-        for w in words[1:]:
-            a = AudioSegment.from_mp3(
-                f"{BASE_FILE_LOCATION}audio/{w.upper()}.mp3")
-            combined += a
+    #     for w in words[1:]:
+    #         a = AudioSegment.from_mp3(
+    #             f"{BASE_FILE_LOCATION}audio/{w.upper()}.mp3")
+    #         combined += a
 
-        combined.export(filePath, format="mp3")
+    #     combined.export(filePath, format="mp3")
         duration = len(combined)
 
-    return filePath.split("/")[-1], duration
+    return filepath.split("/")[-1], duration
 
 def get_experiment_from_db(exp_id):
     return Experiment.query.filter_by(guid=exp_id).first()
@@ -219,11 +222,13 @@ def get_audio():
     else:
         words = exp.get_current_wordlist()
 
-    fileName, fileDuration = generate_audio_file(words)
+    filename = f'{'_'.join(words)}.mp3'
+    fileDuration = generate_audio_file(words)
 
     exp.record_audio_clip_length(fileDuration)
 
-    return send_from_directory(f'{BASE_FILE_LOCATION}audio/generated', fileName)
+    #return send_from_directory(f'{BASE_FILE_LOCATION}audio/generated', fileName)
+    return send_from_directory(f'{BASE_FILE_LOCATION}audio/', filename)
 
 @app.route('/get_visual')
 @requires_experiment_id
