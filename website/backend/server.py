@@ -19,7 +19,7 @@ import attack
 import utils
 import logging
 import polly_numbers
-
+from mutagen.mp3 import MP3
 
 logging.basicConfig(
     filename='backend.log',
@@ -99,10 +99,10 @@ def generate_audio_file(words):
     """
 
     app.logger.debug(f"Generating audio file for: {str(words)}")
-
-    duration = 0
     
     filepath = polly_numbers.get_audio_clip(words)
+
+    duration = MP3(filepath).info.length
 
     return filepath.split("/")[-1], duration
 

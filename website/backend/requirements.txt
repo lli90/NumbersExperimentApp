@@ -12,3 +12,4 @@ flask-testing
 Flask-SQLAlchemy
 botocore
 boto3
+mutagen
