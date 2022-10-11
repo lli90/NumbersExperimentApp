@@ -104,20 +104,6 @@ def generate_audio_file(words):
     
     filepath = polly_numbers.get_audio_clip(words)
 
-    #filePath = f"{BASE_FILE_LOCATION}audio/generated/{'_'.join(words)}.mp3"
-    # if not os.path.isfile(filePath):
-
-    #     combined = AudioSegment.from_mp3(
-    #         f"{BASE_FILE_LOCATION}audio/{words[0].upper()}.mp3")
-
-    #     for w in words[1:]:
-    #         a = AudioSegment.from_mp3(
-    #             f"{BASE_FILE_LOCATION}audio/{w.upper()}.mp3")
-    #         combined += a
-
-    #     combined.export(filePath, format="mp3")
-    # duration = len(combined)
-
     return filepath.split("/")[-1], duration
 
 def get_experiment_from_db(exp_id):
@@ -141,6 +127,7 @@ def save_exp_to_json(exp):
 
     variables.remove("query")
     variables.remove("metadata")
+    variables.remove("registry")
 
     json_out = {}
     for v in variables:
